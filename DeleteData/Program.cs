@@ -7,18 +7,17 @@ ETradeDbContext context = new();
 
 #region Veri Silme İşlemi Nasıl Gerçekleştirilir
 
-//Product product = await context.Products.FirstOrDefaultAsync(u=>u.Id == 1);
-//context.Products.Remove(product);
-//await context.SaveChangesAsync();
+Product product = await context.Products.FirstOrDefaultAsync(u => u.Id == 1);
+context.Products.Remove(product);
+await context.SaveChangesAsync();
 
 #endregion
 
-
 #region EntityState ile veri silme işlemi
 
-//Product prdct = new() { Id = 7 };
-//context.Entry(prdct).State = EntityState.Deleted;
-//await context.SaveChangesAsync();
+Product prdct = new() { Id = 7 };
+context.Entry(prdct).State = EntityState.Deleted;
+await context.SaveChangesAsync();
 
 #endregion
 
