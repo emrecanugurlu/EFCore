@@ -43,19 +43,19 @@ ETradeDbContext context = new();
 #region Deferred Execution Nedir?
 //Deferred execution, bir sorgunun, sorgunun yapılandırıldığı anda değil, sonuçlarının ihtiyaç duyulduğu anda çalıştırılması anlamına gelir. Yani sorgu oluşturulur ve ihtiyaç duyulduğu anda execute edilir.
 
-var productId = 1;
+//var productId = 1;
 
 
-var products = from p in context.Products
-               where p.Id > productId
-               select p;
+//var products = from p in context.Products
+//               where p.Id > productId
+//               select p;
 
-productId = 5;
+//productId = 5;
 
-foreach (var p in products)
-{
-    Console.WriteLine(p.Name);
-}
+//foreach (var p in products)
+//{
+//    Console.WriteLine(p.Name);
+//}
 
 //Burada deferred execution çalışma mantığından dolayı productId değerini 5 olarak kabul edilecektir.
 
@@ -63,6 +63,57 @@ foreach (var p in products)
 #endregion
 #endregion
 
+
+#region Çogul Veri Getiren Sorgulama Fonksiyonları
+#region ToListAsync
+//Oluşturulan sorguyu execute etmemizi sağlayan fonksiyondur.
+#region Method Syntax
+//var urunler = await context.Products.ToListAsync();
+//Console.WriteLine();
+#endregion
+#region Query Syntax
+//var products = await (from p in context.Products
+//               select p).ToListAsync();
+#endregion
+#endregion
+#region Where
+//WHERE ifadesi, belirli bir koşula uyan kayıtları seçmek için kullanılır.
+#region Method Syntax
+//var products = await context.Products.Where(p => p.Id>3).ToListAsync();
+//Console.WriteLine();
+#endregion
+#region Query Syntax
+//var products = await (from p in context.Products
+//               where p.Id > 5 
+//               select p).ToListAsync();
+//Console.WriteLine();
+#endregion
+#endregion
+#region OrderBy
+//Sorgu sonucunu belirli bir sütuna göre sıralamak için kullanılır.
+#region Method Syntax 
+//var products = await context.Products.Where(p => p.Id >=6).OrderBy(p => p.Name).ToListAsync();
+//Console.WriteLine();
+#endregion
+#region Query Syntax
+//var products = from p in context.Products
+//               where p.Id >= 6
+//               orderby p.Name descending
+//               select p;
+#endregion
+#endregion
+#region ThenBy
+// ThenBy metodu, ORDER BY ifadesinde sıralama yaparken birden fazla sıralama kriteri belirtmek için kullanılır.
+#region Method Syntax
+//var products = await context.Products.Where(p => p.Id >= 6).OrderBy(p => p.Name).ThenBy(p => p.Description).ToListAsync();
+#endregion
+#region Query Syntax
+//var products  = await (from p in context.Products
+//                      orderby p.Id,p.Name descending
+//                      select p).ToListAsync();
+#endregion
+#endregion
+#endregion
 public class ETradeDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
