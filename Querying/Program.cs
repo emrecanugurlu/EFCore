@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 Console.WriteLine("Hello, World!");
@@ -144,10 +145,41 @@ ETradeDbContext context = new();
 #region LastAsync ve LastOrDefaultAsync Fonksiyonları
 //LastAsync() yöntemi, belirli bir sıraya göre sıralanmış bir veri kümesinde son öğeyi döndürür. LastOrDefaultAsync() yöntemi ise, son öğeyi döndürürken, veri kümesinde son öğe yoksa varsayılan değeri döndürür
 //Eğer veri kümesi sıralanmamışsa, LastAsync() ve LastOrDefaultAsync() yöntemleri kullanmadan önce veri kümesini sıralamak için OrderBy() veya OrderByDescending() yöntemlerini kullanmak gerekir.
-//var product = await context.Products.LastAsync(p => p.Id>4);
+//var product = await context.Products.OrderBy(p => p.Id).LastAsync(p => p.Id>4);
 #endregion
 #endregion
+#region Diğer Sorgulama Fonksiyonları
+#region CountAsync
+//CountAsync() yöntemi, bir sorgunun sonucunda döndürülen öğe sayısını elde etmek için oldukça kullanışlıdır. Bu yöntem, performans açısından daha iyi bir seçenek sağlar çünkü yalnızca bir sayı döndürür ve veritabanından tüm öğeleri getirerek sayma işlemini gerçekleştirmez.
+//var count = await context.Products.CountAsync();
+#endregion
+#region LongCountAsync
+//CountAsync() yöntemine benzer şekilde çalışır, ancak geri döndürdüğü sonuç veri tipi "long" olduğu için, sayı çok büyük olabilecek veri kümelerinde kullanılır.
+//var product = await context.Products.LongCountAsync();
+#endregion
+#region AnyAsync
+//AnyAsync() yöntemi, bir sorgunun sonucunda elde edilebilecek belirli bir öğe veya koleksiyon var mı yok mu, gibi basit koşullar için kullanışlıdır. Bu yöntem, veritabanına ek bir yük getirmeden sorguyu yürütebilir.
 
+//var anyData = await context.Products.AnyAsync(p => p.Id>32);
+#endregion
+#region MaxAsync
+//Verilen kolondaki max veriyi getirir.
+//var maxData = await context.Products.MaxAsync(p=>p.Id);
+#endregion
+#region MinAsync
+//Verilen kolondaki min veriyi getirir.
+//var minData = await context.Products.MinAsync(p => p.Id);
+#endregion
+#region Distinct
+//Distinct() yöntemi, bir sorgudan dönen sonuçların benzersiz öğelerini elde etmek için kullanılır. Bu yöntem, sorgunun sonucunda dönen veri kümesini filtreleyerek, yalnızca benzersiz öğeleri döndürür.
+//var products = await context.Products.Select(p => p.Name).Distinct().ToListAsync();
+#endregion
+#region AllAsync
+    //AllAsync() yöntemi, bir koleksiyon içindeki tüm öğelerin belirli bir koşulu karşılayıp karşılamadığını kontrol eder ve sonucu bir boolean değeri olarak döndürür. Yani, bu yöntemle belirli bir koşulu sağlayan tüm öğelerin koleksiyonda bulunup bulunmadığı kontrol edilebilir.
+    //var b = await context.Products.AllAsync(p => p.Id > 10);
+#endregion
+#endregion
+Console.WriteLine();
 public class ETradeDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
