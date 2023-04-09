@@ -114,6 +114,40 @@ ETradeDbContext context = new();
 #endregion
 #endregion
 #endregion
+#region Tekil Veri Getiren Sorgulama Fonksiyonları
+#region SingleAsync ve SingleOrDefault Fonksiyonları
+//Single() metodu, sorgudan yalnızca bir sonuç döndürdüğünde kullanılır. Bu metot, bir koleksiyondan tek bir öğe seçmenize izin verir ve yalnızca bir öğe seçmeniz gerektiğinde kullanmanız gereken bir metottur. Eğer sorgunuz birden fazla sonuç döndürürse, Single() metodu InvalidOperationException fırlatır.
+
+//SingleOrDefault() metodu, Single() metodu gibi yalnızca bir öğe döndürmeyi bekler, ancak farkı, sorgudan hiçbir sonuç döndürülmediği durumlarda varsayılan bir değer döndürür. SingleOrDefault() metodu, koleksiyonda yalnızca bir öğe bulunmasını beklediğiniz durumlarda kullanılabilir, ancak koleksiyonda hiç öğe bulunmaması durumunda null veya varsayılan bir değer döndürür.
+
+//Bu nedenle, Single() metodu yalnızca bir sonuç döndüren sorgularda kullanılmalıdır, SingleOrDefault() metodu ise bir sonuç döndürmeyen durumları da ele almak için kullanılabilir.
+
+//var product = await context.Products.SingleAsync(p => p.Id == 1);
+//var product1 = await context.Products.SingleOrDefaultAsync(p => p.Id == 1);
+//Console.WriteLine();
+#endregion
+#region FirstAsync ve FirstOrDefaultAsync Fonksiyonları
+
+//First() metodu, sorgudan elde edilen sonuçlar listesindeki ilk öğeyi alır ve eğer liste boşsa bir InvalidOperationException fırlatır. Bu nedenle, First() metodunu kullanırken, liste boş olmadığından emin olmanız gerekir.
+
+//FirstOrDefault() metodu ise, sorgudan elde edilen sonuçlar listesindeki ilk öğeyi alır ve liste boşsa varsayılan değeri (genellikle null) döndürür.Bu nedenle, FirstOrDefault() metodunu kullanırken, liste boş olabilir ve sonucun null olabileceğini kabul etmeniz gerekir.
+
+//Özetle, First() metodu sorgudan elde edilen ilk öğeyi döndürürken, liste boşsa bir hata fırlatır. FirstOrDefault() metodu ise aynı işlevi yerine getirir ancak liste boşsa varsayılan değeri döndürür.
+
+//var product = await context.Products.FirstAsync(p => p.Id == 12);
+//var product1 = await context.Products.FirstOrDefaultAsync(p => p.Id == 12);
+#endregion
+#region FindAsync Fonksiyonu
+//FindAsync() yöntemi, belirli bir türdeki varlıklar için birincil anahtar değeri kullanarak tek bir varlık nesnesi döndürür. Birincil anahtar değerine sahip bir varlık nesnesi yoksa null değer döndürür
+//var product = await context.Products.FindAsync(2);
+#endregion
+#region LastAsync ve LastOrDefaultAsync Fonksiyonları
+//LastAsync() yöntemi, belirli bir sıraya göre sıralanmış bir veri kümesinde son öğeyi döndürür. LastOrDefaultAsync() yöntemi ise, son öğeyi döndürürken, veri kümesinde son öğe yoksa varsayılan değeri döndürür
+//Eğer veri kümesi sıralanmamışsa, LastAsync() ve LastOrDefaultAsync() yöntemleri kullanmadan önce veri kümesini sıralamak için OrderBy() veya OrderByDescending() yöntemlerini kullanmak gerekir.
+//var product = await context.Products.LastAsync(p => p.Id>4);
+#endregion
+#endregion
+
 public class ETradeDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
