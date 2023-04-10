@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 Console.WriteLine("Hello, World!");
 
@@ -194,10 +195,27 @@ ETradeDbContext context = new();
 //var products = await context.Products.Select(p => new{ p.Id, p.Name }).ToListAsync();
 #endregion
 #region SelectMany
-    //SelectMany() metodu, koleksiyonlarla çalışırken çok boyutlu diziler veya koleksiyonlar oluşturmak için kullanılır. Bu metot, alt koleksiyonlardaki öğeleri tek bir dizi veya koleksiyonda birleştirmenizi sağlar ve birden çok tablo veya ilişkili verilerin tek bir koleksiyonda birleştirilmesinde kullanılabilir.
+//SelectMany() metodu, koleksiyonlarla çalışırken çok boyutlu diziler veya koleksiyonlar oluşturmak için kullanılır. Bu metot, alt koleksiyonlardaki öğeleri tek bir dizi veya koleksiyonda birleştirmenizi sağlar ve birden çok tablo veya ilişkili verilerin tek bir koleksiyonda birleştirilmesinde kullanılabilir.
 #endregion
 #endregion
-
+#region GroupBy Fonksiyonu
+#region MethodSyntax
+    //var datas = await context.Products.GroupBy(p => p.Name).Select(group => new
+    //{
+    //    Count = group.Count(),
+    //    group.Key
+    //}).ToListAsync(); 
+#endregion
+#region QuerySyntax
+var datas = await (from p in context.Products
+                   group p by p.Name into g
+                   select new
+                   {
+                       count = g.Count(),
+                       g.Key
+                   }).ToArrayAsync();
+#endregion
+#endregion
 
 Console.WriteLine();
 public class ETradeDbContext : DbContext
