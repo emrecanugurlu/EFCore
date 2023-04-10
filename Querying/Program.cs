@@ -175,10 +175,30 @@ ETradeDbContext context = new();
 //var products = await context.Products.Select(p => p.Name).Distinct().ToListAsync();
 #endregion
 #region AllAsync
-    //AllAsync() yöntemi, bir koleksiyon içindeki tüm öğelerin belirli bir koşulu karşılayıp karşılamadığını kontrol eder ve sonucu bir boolean değeri olarak döndürür. Yani, bu yöntemle belirli bir koşulu sağlayan tüm öğelerin koleksiyonda bulunup bulunmadığı kontrol edilebilir.
-    //var b = await context.Products.AllAsync(p => p.Id > 10);
+//AllAsync() yöntemi, bir koleksiyon içindeki tüm öğelerin belirli bir koşulu karşılayıp karşılamadığını kontrol eder ve sonucu bir boolean değeri olarak döndürür. Yani, bu yöntemle belirli bir koşulu sağlayan tüm öğelerin koleksiyonda bulunup bulunmadığı kontrol edilebilir.
+//var b = await context.Products.AllAsync(p => p.Id > 10);
 #endregion
 #endregion
+#region Sorgu Sonucu Dönüşüm Fonksiyonları
+#region ToDictionaryAsync
+//ToDictionaryAsync() metodu, veritabanından veya başka bir veri kaynağından alınan verileri, anahtar-değer çiftleri olarak sözlük veri yapısına dönüştürmek için kullanılır.
+//var datas = await context.Products.ToDictionaryAsync(p=>p.Id,p=>p.Name);
+#endregion
+#region ToArrayAsync
+//ToArrayAsync() metodu, bir IQueryable<T> sorgusunun sonucunu bir dizi olarak döndürür ve veritabanından alınan verileri bellekteki bir diziye aktarmak için kullanılabilir.
+//var products = await context.Products.ToArrayAsync();
+#endregion
+#region Select
+//Select() metodu, bir veri kaynağından belirli özellikleri seçmek ve veri şekillendirme işlemleri yapmak için kullanılır. Bu metodun kullanımı, veritabanından alınan verilerin yalnızca ihtiyaç duyulan özelliklerini alarak performansı artırmak için önerilir.
+//var products = await context.Products.Select(p => p.Id).ToListAsync();
+//var products = await context.Products.Select(p => new{ p.Id, p.Name }).ToListAsync();
+#endregion
+#region SelectMany
+    //SelectMany() metodu, koleksiyonlarla çalışırken çok boyutlu diziler veya koleksiyonlar oluşturmak için kullanılır. Bu metot, alt koleksiyonlardaki öğeleri tek bir dizi veya koleksiyonda birleştirmenizi sağlar ve birden çok tablo veya ilişkili verilerin tek bir koleksiyonda birleştirilmesinde kullanılabilir.
+#endregion
+#endregion
+
+
 Console.WriteLine();
 public class ETradeDbContext : DbContext
 {
