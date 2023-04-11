@@ -54,7 +54,7 @@ public class ETradeDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=localhost, 1433; Database=ETrade; User Id=sa; Password=ECURi13974;TrustServerCertificate=True;Encrypt=False;");
+        optionsBuilder.UseSqlServer("Server=localhost, 1433; Database=ETrade; User Id=sa; Password=1q2w3e+!;TrustServerCertificate=True;Encrypt=False;");
         
     }
     public DbSet<Product> Products { get; set; }

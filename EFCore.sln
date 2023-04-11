@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeTracker", "ChangeTrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking", "Tracking\Tracking.csproj", "{08D907C6-9C7F-422A-8317-65E305ECB509}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneToOneRelationship", "OneToOneRelationship\OneToOneRelationship.csproj", "{347FF8A5-114F-400E-80E7-0E0B57F92264}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{08D907C6-9C7F-422A-8317-65E305ECB509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08D907C6-9C7F-422A-8317-65E305ECB509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08D907C6-9C7F-422A-8317-65E305ECB509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{347FF8A5-114F-400E-80E7-0E0B57F92264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{347FF8A5-114F-400E-80E7-0E0B57F92264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{347FF8A5-114F-400E-80E7-0E0B57F92264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{347FF8A5-114F-400E-80E7-0E0B57F92264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
