@@ -76,7 +76,7 @@ public class Addrees
 
 #endregion
 
-public class ECompanyDbContext : DbContext 
+public class ECompanyDbContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -90,9 +90,11 @@ public class ECompanyDbContext : DbContext
         modelBuilder.Entity<Employee>()
             .HasOne(e => e.Addrees)
             .WithOne(a => a.Employee)
-            .HasForeignKey<Employee>(e=>e.FKey);
+            .HasForeignKey<Employee>(e => e.FKey);
     }
 
-    public DbSet<Employee> Employees{ get; set; }
+
+
+    public DbSet<Employee> Employees { get; set; }
     public DbSet<Addrees> Addreeses { get; set; }
 }
