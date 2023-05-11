@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-
+Console.WriteLine("Deneme");
 var dbContext = new ApplicationDbContext();
 
 
@@ -74,21 +74,21 @@ var dbContext = new ApplicationDbContext();
 
 #region 1.Yöntem -> Principal Entity üzerinden Dependent Entity verisi ekleme
 #region Nesne referansı üzerinden ekleme
-Blog blog = new() { Name = "emrecnugurlu.com" };
-blog.Posts.Add(new() { Title = "Post1" });
-blog.Posts.Add(new() { Title = "Post2" });
+//Blog blog = new() { Name = "emrecnugurlu.com" };
+//blog.Posts.Add(new() { Title = "Post1" });
+//blog.Posts.Add(new() { Title = "Post2" });
 //dbContext.AddAsync(blog);
 //dbContext.SaveChanges();
 #endregion
 #region Object Initializer üzerinden ekleme
-Blog blog2 = new Blog()
-{
-    Name = "yeniblog.com",
-    Posts = new List<Post>() {
-        new Post() { Title = "Post3" },
-        new Post() { Title = "Post4" }
-    }
-};
+//Blog blog2 = new Blog()
+//{
+//    Name = "yeniblog.com",
+//    Posts = new List<Post>() {
+//        new Post() { Title = "Post3" },
+//        new Post() { Title = "Post4" }
+//    }
+//};
 //dbContext.AddAsync(blog2);
 //dbContext.SaveChanges();
 #endregion
@@ -98,32 +98,32 @@ Blog blog2 = new Blog()
 #endregion
 #region 3.Yöntem -> Foreign Key kolonu üzerinden veri ekleme 
 //Bu yöntem önceden eklenmiş olan bir Principal Entity'e karşılık veri ekleyebiliriz.
-Post post = new Post()
-{
-    BlogId = 1,
-    Title = "Post10",
-};
+//Post post = new Post()
+//{
+//    BlogId = 1,
+//    Title = "Post10",
+//};
 //dbContext.AddAsync(post);
 //dbContext.SaveChanges();
 #endregion
-class Blog
-{
-    public Blog()
-    {
-        Posts = new HashSet<Post>();
-    }
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public ICollection<Post> Posts { get; set; }
-}
+//class Blog
+//{
+//    public Blog()
+//    {
+//        Posts = new HashSet<Post>();
+//    }
+//    public int Id { get; set; }
+//    public string Name { get; set; }
+//    public ICollection<Post> Posts { get; set; }
+//}
 
-class Post
-{
-    public int Id { get; set; }
-    public int BlogId { get; set; }
-    public string Title { get; set; }
-    public Blog Blog { get; set; }
-}
+//class Post
+//{
+//    public int Id { get; set; }
+//    public int BlogId { get; set; }
+//    public string Title { get; set; }
+//    public Blog Blog { get; set; }
+//}
 
 //class ApplicationDbContext : DbContext
 //{
@@ -140,6 +140,21 @@ class Post
 #endregion
 
 #region Many to Many ilişkisel senaryolarda veri ekeleme
+
+Book book = new()
+{
+    Name = "Book 1",
+    Authors = new HashSet<Author>()
+    {
+        new Author() { Name = "Ahmed Hamdi"}
+    }
+};
+
+dbContext.AddAsync(book);
+dbContext.SaveChanges();
+
+
+
 class Book
 {
     public Book()
@@ -170,8 +185,8 @@ class ApplicationDbContext : DbContext
         optionsBuilder.UseSqlServer("Server=localhost, 1433; Database=ETrade; User Id=sa; Password=1Q2W3E4R+; TrustServerCertificate=True; Encrypt=False;");
     }
 
-    DbSet<Book> Blogs { get; set; }
-    DbSet<Author> Posts { get; set; }
+    DbSet<Book> Books { get; set; }
+    DbSet<Author> Authors { get; set; }
 
 }
 #endregion
