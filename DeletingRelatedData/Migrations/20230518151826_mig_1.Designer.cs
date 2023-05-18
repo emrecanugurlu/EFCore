@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeletingRelatedData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230517163735_mig_1")]
+    [Migration("20230518151826_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
@@ -173,8 +173,7 @@ namespace DeletingRelatedData.Migrations
                     b.HasOne("Blog", "Blog")
                         .WithMany("Posts")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Blog");
                 });

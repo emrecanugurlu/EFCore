@@ -170,8 +170,7 @@ namespace DeletingRelatedData.Migrations
                     b.HasOne("Blog", "Blog")
                         .WithMany("Posts")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Blog");
                 });

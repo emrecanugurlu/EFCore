@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 ApplicationDbContext context = new ApplicationDbContext();
 
@@ -66,9 +67,74 @@ ApplicationDbContext context = new ApplicationDbContext();
 //await context.SaveChangesAsync();
 #endregion
 #region Many to Many ilişkisel senaryolarda veri silme işlemi
+#region Saving
+//Book book1 = new Book()
+//{
+//    BookName = "Kitap 1"
+//};
+//Book book2 = new Book()
+//{
+//    BookName = "Kitap 2"
+//};
+//Book book3 = new Book()
+//{
+//    BookName = "Kitap 3"
+//};
+
+
+//Author author1 = new Author()
+//{
+//    AuthorName = "Yazar 1",
+//    Books = new List<Book>()
+//    {
+//        book1, book2
+//    }
+//};
+//Author author2 = new Author()
+//{
+//    AuthorName = "Yazar 2",
+//    Books = new List<Book>()
+//    {
+//        book1, book3
+//    }
+//};
+//Author author3 = new Author()
+//{
+//    AuthorName = "Yazar 3",
+//    Books = new List<Book>()
+//    {
+//        book3
+//    }
+//};
+
+//await context.Authors.AddRangeAsync(author1, author2, author3);
+//await context.SaveChangesAsync();
 
 #endregion
+//Book? book = await context.Books.Include(b => b.Authors).SingleOrDefaultAsync(b => b.Id == 1);
+//Author? author = book!.Authors.FirstOrDefault(a => a.Id == 1);
+////context.Authors.Remove(author!); Bu yöntem yazar ile birlikte, bu yazarla ilişkisel bağı olan tüm yapıları silecektir. Kullanırken dikkatli olmak gerekmektedir.  
+//book.Authors.Remove(author!);
+//await context.SaveChangesAsync();
+#endregion
 
+#region Cascade Delete
+//Bu davranış modelleri Fluent API ile modellenmektedir.
+#region Cascade
+//Principle tabloda bir veri silindiğinde, eğer ki dependent tabloda bu veriye karşılık bir değer var ise o değeri de silecektir. Bu Entity Framework'te varsayılan davranış olarak karşımıza çıkmaktadır.
+#endregion
+#region SetNull
+//Principle tabloda bir değer silindiğinde, bu değere karşılık dependent tabloda bir değer var ise bu değerin foreign key property'sine "null" değer atanacaktır.
+#endregion
+#region Restrict
+//Principle tabloda bir değer silindiğinde, bu değere karşılık dependent tabloda bir değer var ise Entity Framework bizlere hata döndürecektir.
+
+Blog? blog = await context.Blogs.SingleOrDefaultAsync(b => b.Id == 1);
+context.Blogs.Remove(blog!);
+await context.SaveChangesAsync();
+#endregion
+
+#endregion
 class Person
 {
     public int Id { get; set; }
@@ -138,6 +204,12 @@ class ApplicationDbContext : DbContext
             .HasOne(a => a.Person)
             .WithOne(p => p.Addrees)
             .HasForeignKey<Addrees>(a => a.Id);
+
+        modelBuilder.Entity<Post>()
+            .HasOne(p => p.Blog)
+            .WithMany(b => b.Posts)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
     }
     public DbSet<Addrees> Addreeses { get; set; }
     public DbSet<Person> Persons { get; set; }
